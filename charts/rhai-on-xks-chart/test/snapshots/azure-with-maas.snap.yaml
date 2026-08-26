@@ -4118,8 +4118,6 @@ spec:
               fi
               
               echo "=== MaaS Gateway setup complete ==="
-              
-
 ---
 # Source: rhai-on-xks-chart/templates/hooks/pre-delete-crs-job.yaml
 apiVersion: batch/v1
@@ -4242,17 +4240,50 @@ spec:
               set -euo pipefail
 
               # ── Cleanup path: delete CertManager CR + operands before subchart is disabled ──
+              # Only remove cert-manager resources that THIS Helm release owns
+              # (annotation meta.helm.sh/release-name == RELEASE_NAME). An
+              # externally managed cert-manager — e.g. an OSS install this chart
+              # never created — is left untouched; deleting it could break
+              # unrelated workloads on the cluster. This mirrors the ownership
+              # check the migration path below uses before adopting resources.
               if [[ "$CERT_MANAGER_ENABLED" == "false" ]]; then
+                owned_by_release() {
+                  local ns_args="$1"
+                  local resource="$2"
+                  if ! kubectl get $ns_args "$resource" &>/dev/null; then
+                    return 1
+                  fi
+                  local owner
+                  owner=$(kubectl get $ns_args "$resource" -o jsonpath='{.metadata.annotations.meta\.helm\.sh/release-name}' 2>/dev/null || true)
+                  [[ "$owner" == "${RELEASE_NAME}" ]]
+                }
+
                 if kubectl get certmanager cluster &>/dev/null; then
-                  echo "Cleaning up cert-manager before disabling subchart..."
-                  kubectl patch certmanager cluster --type=merge -p '{"metadata":{"finalizers":[]}}' 2>/dev/null || true
-                  kubectl delete certmanager cluster --timeout=30s 2>/dev/null || true
+                  if owned_by_release "" "certmanager/cluster"; then
+                    echo "Cleaning up cert-manager CR owned by '${RELEASE_NAME}'..."
+                    kubectl patch certmanager cluster --type=merge -p '{"metadata":{"finalizers":[]}}' 2>/dev/null || true
+                    kubectl delete certmanager cluster --timeout=30s 2>/dev/null || true
+                  else
+                    echo "Skipping certmanager/cluster (not owned by '${RELEASE_NAME}')."
+                  fi
                 fi
-                echo "Deleting cert-manager operand deployments..."
-                kubectl delete deployments -n cert-manager --all --timeout=60s 2>/dev/null || true
-                echo "Removing cert-manager namespaces..."
-                kubectl delete namespace cert-manager --ignore-not-found --timeout=60s 2>/dev/null || true
-                kubectl delete namespace cert-manager-operator --ignore-not-found --timeout=60s 2>/dev/null || true
+
+                if owned_by_release "" "namespace/cert-manager"; then
+                  echo "Deleting cert-manager operand deployments..."
+                  kubectl delete deployments -n cert-manager --all --timeout=60s 2>/dev/null || true
+                  echo "Removing cert-manager namespace..."
+                  kubectl delete namespace cert-manager --ignore-not-found --timeout=60s 2>/dev/null || true
+                else
+                  echo "Skipping cert-manager namespace (not owned by '${RELEASE_NAME}')."
+                fi
+
+                if owned_by_release "" "namespace/cert-manager-operator"; then
+                  echo "Removing cert-manager-operator namespace..."
+                  kubectl delete namespace cert-manager-operator --ignore-not-found --timeout=60s 2>/dev/null || true
+                else
+                  echo "Skipping cert-manager-operator namespace (not owned by '${RELEASE_NAME}')."
+                fi
+
                 echo "Cert-manager cleanup complete."
                 exit 0
               fi
