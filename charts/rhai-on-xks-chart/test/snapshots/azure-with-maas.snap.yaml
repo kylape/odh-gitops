@@ -5,8 +5,9 @@ kind: Namespace
 metadata:
   name: cert-manager-operator
   annotations:
+    meta.helm.sh/release-name: "release-test"
+    meta.helm.sh/release-namespace: "default"
     helm.sh/resource-policy: keep
-
 ---
 # Source: rhai-on-xks-chart/charts/cert-manager-operator/templates/namespace.yaml
 apiVersion: v1
@@ -14,8 +15,9 @@ kind: Namespace
 metadata:
   name: cert-manager
   annotations:
+    meta.helm.sh/release-name: "release-test"
+    meta.helm.sh/release-namespace: "default"
     helm.sh/resource-policy: keep
-
 ---
 # Source: rhai-on-xks-chart/templates/cloudmanager/azure/manager/namespace-rhai-cloudmanager-system.yaml
 apiVersion: v1
@@ -27,7 +29,6 @@ metadata:
     app.kubernetes.io/managed-by: Helm
   annotations:
     helm.sh/resource-policy: keep
-
 ---
 # Source: rhai-on-xks-chart/templates/manager/namespace-redhat-ods-applications.yaml
 apiVersion: v1
@@ -39,7 +40,6 @@ metadata:
     app.kubernetes.io/managed-by: Helm
   annotations:
     helm.sh/resource-policy: keep
-
 ---
 # Source: rhai-on-xks-chart/templates/manager/namespace-redhat-ods-operator.yaml
 apiVersion: v1
@@ -51,7 +51,6 @@ metadata:
     app.kubernetes.io/managed-by: Helm
   annotations:
     helm.sh/resource-policy: keep
-
 ---
 # Source: rhai-on-xks-chart/charts/cert-manager-operator/templates/serviceaccount-cert-manager-operator-controller-manager.yaml
 apiVersion: v1
@@ -61,7 +60,6 @@ metadata:
   namespace: cert-manager-operator
 imagePullSecrets:
   - name: rhai-pull-secret
-
 ---
 # Source: rhai-on-xks-chart/charts/cert-manager-operator/templates/serviceaccount-cert-manager.yaml
 apiVersion: v1
@@ -71,7 +69,6 @@ metadata:
   namespace: cert-manager
 imagePullSecrets:
   - name: rhai-pull-secret
-
 ---
 # Source: rhai-on-xks-chart/charts/cert-manager-operator/templates/serviceaccount-cert-manager.yaml
 apiVersion: v1
@@ -81,7 +78,6 @@ metadata:
   namespace: cert-manager
 imagePullSecrets:
   - name: rhai-pull-secret
-
 ---
 # Source: rhai-on-xks-chart/charts/cert-manager-operator/templates/serviceaccount-cert-manager.yaml
 apiVersion: v1
@@ -91,7 +87,6 @@ metadata:
   namespace: cert-manager
 imagePullSecrets:
   - name: rhai-pull-secret
-
 ---
 # Source: rhai-on-xks-chart/templates/cloudmanager/azure/rbac/serviceaccount-azure-cloud-manager-operator.yaml
 apiVersion: v1
@@ -101,7 +96,6 @@ metadata:
   namespace: rhai-cloudmanager-system
 imagePullSecrets:
   - name: rhai-pull-secret
-
 ---
 # Source: rhai-on-xks-chart/templates/rbac/serviceaccount-redhat-ods-operator-controller-manager.yaml
 apiVersion: v1
@@ -111,7 +105,6 @@ metadata:
   namespace: redhat-ods-operator
 imagePullSecrets:
   - name: rhai-pull-secret
-
 ---
 # Source: rhai-on-xks-chart/templates/cloudmanager/azure/crds/customresourcedefinition-azurekubernetesengines.infrastructure.opendatahub.io.yaml
 apiVersion: apiextensions.k8s.io/v1
@@ -337,7 +330,6 @@ spec:
       storage: true
       subresources:
         status: {}
-
 ---
 # Source: rhai-on-xks-chart/templates/crds/customresourcedefinition-platforms.config.opendatahub.io.yaml
 apiVersion: apiextensions.k8s.io/v1
@@ -693,7 +685,6 @@ spec:
       storage: true
       subresources:
         status: {}
-
 ---
 # Source: rhai-on-xks-chart/charts/cert-manager-operator/templates/clusterrole-cert-manager-operator-controller-manager-clusterro.yaml
 apiVersion: rbac.authorization.k8s.io/v1
@@ -984,7 +975,6 @@ rules:
       - subjectaccessreviews
     verbs:
       - create
-
 ---
 # Source: rhai-on-xks-chart/charts/cert-manager-operator/templates/clusterrole-cert-manager-operator-metrics-reader.yaml
 apiVersion: rbac.authorization.k8s.io/v1
@@ -1002,7 +992,6 @@ rules:
       - /metrics
     verbs:
       - get
-
 ---
 # Source: rhai-on-xks-chart/templates/cloudmanager/azure/rbac/clusterrole-rhai-azure-cloud-manager-role.yaml
 apiVersion: rbac.authorization.k8s.io/v1
@@ -1251,7 +1240,6 @@ rules:
       - patch
       - update
       - watch
-
 ---
 # Source: rhai-on-xks-chart/templates/rbac/clusterrole-redhat-ods-operator-metrics-reader.yaml
 apiVersion: rbac.authorization.k8s.io/v1
@@ -1263,7 +1251,6 @@ rules:
       - /metrics
     verbs:
       - get
-
 ---
 # Source: rhai-on-xks-chart/templates/rbac/clusterrole-rhods-operator-role.yaml
 apiVersion: rbac.authorization.k8s.io/v1
@@ -2380,7 +2367,6 @@ rules:
       - patch
       - update
       - watch
-
 ---
 # Source: rhai-on-xks-chart/charts/cert-manager-operator/templates/clusterrolebinding-cert-manager-operator-controller-manager-clusterro.yaml
 apiVersion: rbac.authorization.k8s.io/v1
@@ -2396,7 +2382,6 @@ subjects:
   - kind: ServiceAccount
     name: cert-manager-operator-controller-manager
     namespace: cert-manager-operator
-
 ---
 # Source: rhai-on-xks-chart/templates/cloudmanager/azure/rbac/clusterrolebinding-rhai-azure-cloud-manager-rolebinding.yaml
 apiVersion: rbac.authorization.k8s.io/v1
@@ -2411,7 +2396,6 @@ subjects:
   - kind: ServiceAccount
     name: azure-cloud-manager-operator
     namespace: rhai-cloudmanager-system
-
 ---
 # Source: rhai-on-xks-chart/templates/rbac/clusterrolebinding-rhods-operator-rolebinding.yaml
 apiVersion: rbac.authorization.k8s.io/v1
@@ -2426,7 +2410,6 @@ subjects:
   - kind: ServiceAccount
     name: rhai-operator-controller-manager
     namespace: redhat-ods-operator
-
 ---
 # Source: rhai-on-xks-chart/charts/cert-manager-operator/templates/role-cert-manager-operator-controller-manager-role.yaml
 apiVersion: rbac.authorization.k8s.io/v1
@@ -2466,7 +2449,6 @@ rules:
     verbs:
       - create
       - patch
-
 ---
 # Source: rhai-on-xks-chart/templates/cloudmanager/azure/rbac/role-azure-cloud-manager-leader-election-role.yaml
 apiVersion: rbac.authorization.k8s.io/v1
@@ -2491,7 +2473,6 @@ rules:
     verbs:
       - create
       - patch
-
 ---
 # Source: rhai-on-xks-chart/charts/cert-manager-operator/templates/rolebinding-cert-manager-operator-controller-manager-rolebindi.yaml
 apiVersion: rbac.authorization.k8s.io/v1
@@ -2507,7 +2488,6 @@ subjects:
   - kind: ServiceAccount
     name: cert-manager-operator-controller-manager
     namespace: cert-manager-operator
-
 ---
 # Source: rhai-on-xks-chart/templates/cloudmanager/azure/rbac/rolebinding-azure-cloud-manager-leader-election-rolebinding.yaml
 apiVersion: rbac.authorization.k8s.io/v1
@@ -2523,7 +2503,6 @@ subjects:
   - kind: ServiceAccount
     name: azure-cloud-manager-operator
     namespace: rhai-cloudmanager-system
-
 ---
 # Source: rhai-on-xks-chart/charts/cert-manager-operator/templates/service-cert-manager-operator-controller-manager-metrics-s.yaml
 apiVersion: v1
@@ -2546,7 +2525,6 @@ spec:
       targetPort: https
   selector:
     control-plane: controller-manager
-
 ---
 # Source: rhai-on-xks-chart/templates/manager/service-redhat-ods-operator-controller-manager-metrics-service.yaml
 apiVersion: v1
@@ -2564,7 +2542,6 @@ spec:
       targetPort: 8080
   selector:
     name: rhai-operator
-
 ---
 # Source: rhai-on-xks-chart/templates/webhooks/service-rhai-operator-webhook-service.yaml
 apiVersion: v1
@@ -2586,7 +2563,6 @@ spec:
       targetPort: 9443
   selector:
     name: rhai-operator
-
 ---
 # Source: rhai-on-xks-chart/charts/cert-manager-operator/templates/deployment-cert-manager-operator-controller-manager.yaml
 apiVersion: apps/v1
@@ -2702,7 +2678,6 @@ spec:
       volumes:
         - emptyDir: {}
           name: tmp
-
 ---
 # Source: rhai-on-xks-chart/templates/cloudmanager/azure/manager/deployment-azure-cloud-manager-operator.yaml
 apiVersion: apps/v1
@@ -2814,7 +2789,6 @@ spec:
           type: RuntimeDefault
       serviceAccountName: azure-cloud-manager-operator
       terminationGracePeriodSeconds: 10
-
 ---
 # Source: rhai-on-xks-chart/templates/manager/deployment-rhods-operator.yaml
 apiVersion: apps/v1
@@ -3017,7 +2991,6 @@ spec:
             medium: Memory
             sizeLimit: 10Mi
           name: tmp
-
 ---
 # Source: rhai-on-xks-chart/charts/cert-manager-operator/templates/certmanager.yaml
 apiVersion: operator.openshift.io/v1alpha1
@@ -3039,7 +3012,6 @@ metadata:
   annotations:
     helm.sh/hook: post-install,post-upgrade
     helm.sh/hook-delete-policy: before-hook-creation,hook-succeeded
-
 ---
 # Source: rhai-on-xks-chart/templates/hooks/pre-delete-crs-rbac.yaml
 apiVersion: v1
@@ -3053,7 +3025,6 @@ metadata:
   annotations:
     helm.sh/hook: pre-delete
     helm.sh/hook-delete-policy: before-hook-creation,hook-succeeded
-
 ---
 # Source: rhai-on-xks-chart/templates/hooks/pre-upgrade-migrate-certmanager-job.yaml
 apiVersion: v1
@@ -3068,7 +3039,6 @@ metadata:
     helm.sh/hook: pre-install,pre-upgrade
     helm.sh/hook-weight: "0"
     helm.sh/hook-delete-policy: before-hook-creation,hook-succeeded
-
 ---
 # Source: rhai-on-xks-chart/templates/hooks/post-install-crs-rbac.yaml
 apiVersion: rbac.authorization.k8s.io/v1
@@ -3219,7 +3189,6 @@ rules:
       - create
       - patch
       - update
-
 ---
 # Source: rhai-on-xks-chart/templates/hooks/pre-delete-crs-rbac.yaml
 apiVersion: rbac.authorization.k8s.io/v1
@@ -3267,7 +3236,6 @@ rules:
     verbs:
       - get
       - delete
-
 ---
 # Source: rhai-on-xks-chart/templates/hooks/pre-upgrade-migrate-certmanager-job.yaml
 apiVersion: rbac.authorization.k8s.io/v1
@@ -3347,7 +3315,6 @@ rules:
       - list
       - patch
       - delete
-
 ---
 # Source: rhai-on-xks-chart/templates/hooks/post-install-crs-rbac.yaml
 apiVersion: rbac.authorization.k8s.io/v1
@@ -3368,7 +3335,6 @@ subjects:
   - kind: ServiceAccount
     name: rhai-post-install-hook
     namespace: default
-
 ---
 # Source: rhai-on-xks-chart/templates/hooks/pre-delete-crs-rbac.yaml
 apiVersion: rbac.authorization.k8s.io/v1
@@ -3389,7 +3355,6 @@ subjects:
   - kind: ServiceAccount
     name: rhai-pre-delete-hook
     namespace: default
-
 ---
 # Source: rhai-on-xks-chart/templates/hooks/pre-upgrade-migrate-certmanager-job.yaml
 apiVersion: rbac.authorization.k8s.io/v1
@@ -3411,7 +3376,6 @@ subjects:
   - kind: ServiceAccount
     name: rhai-pre-upgrade-migrate-certmanager
     namespace: default
-
 ---
 # Source: rhai-on-xks-chart/templates/hooks/post-install-crs-rbac.yaml
 # Certificate is namespaced to the applications namespace.
@@ -3436,7 +3400,6 @@ rules:
       - create
       - patch
       - update
-
 ---
 # Source: rhai-on-xks-chart/templates/hooks/post-install-crs-rbac.yaml
 # Permissions in kuadrant-system for Authorino TLS and CA trust setup.
@@ -3489,7 +3452,6 @@ rules:
     verbs:
       - get
       - patch
-
 ---
 # Source: rhai-on-xks-chart/templates/hooks/post-install-crs-rbac.yaml
 apiVersion: rbac.authorization.k8s.io/v1
@@ -3511,7 +3473,6 @@ subjects:
   - kind: ServiceAccount
     name: rhai-post-install-hook
     namespace: default
-
 ---
 # Source: rhai-on-xks-chart/templates/hooks/post-install-crs-rbac.yaml
 apiVersion: rbac.authorization.k8s.io/v1
@@ -3533,7 +3494,6 @@ subjects:
   - kind: ServiceAccount
     name: rhai-post-install-hook
     namespace: default
-
 ---
 # Source: rhai-on-xks-chart/templates/hooks/post-install-crs-job.yaml
 apiVersion: batch/v1
@@ -3669,7 +3629,6 @@ spec:
               spec: {}
               EOF
               echo "Done."
-
 ---
 # Source: rhai-on-xks-chart/templates/hooks/post-install-gateway-job.yaml
 apiVersion: batch/v1
@@ -3865,8 +3824,6 @@ spec:
                     name: inference-gateway-config
               EOF
               echo "Gateway CR 'inference-gateway' created successfully."
-              
-
 ---
 # Source: rhai-on-xks-chart/templates/hooks/post-install-maas-gateway-job.yaml
 apiVersion: batch/v1
@@ -4180,7 +4137,6 @@ spec:
               echo "Deleting AzureKubernetesEngine CR 'default-azurekubernetesengine'..."
               kubectl delete azurekubernetesengine default-azurekubernetesengine --ignore-not-found --timeout=300s
               echo "Done."
-
 ---
 # Source: rhai-on-xks-chart/templates/hooks/pre-upgrade-migrate-certmanager-job.yaml
 apiVersion: batch/v1
@@ -4378,4 +4334,3 @@ spec:
               fi
 
               echo "Migration complete."
-
