@@ -3,6 +3,8 @@ kind: Namespace
 metadata:
   name: {{ .Values.operatorNamespace }}
   annotations:
+    meta.helm.sh/release-name: {{ .Release.Name | quote }}
+    meta.helm.sh/release-namespace: {{ .Release.Namespace | quote }}
     helm.sh/resource-policy: keep
 ---
 apiVersion: v1
@@ -10,4 +12,6 @@ kind: Namespace
 metadata:
   name: {{ .Values.operandNamespace }}
   annotations:
+    meta.helm.sh/release-name: {{ .Release.Name | quote }}
+    meta.helm.sh/release-namespace: {{ .Release.Namespace | quote }}
     helm.sh/resource-policy: keep
