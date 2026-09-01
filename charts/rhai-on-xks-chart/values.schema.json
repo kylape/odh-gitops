@@ -498,7 +498,7 @@
     },
     "imagePullSecret": {
       "type": "object",
-      "description": "Pull secret configuration for private registries. Use --set-file imagePullSecret.dockerConfigJson=path/to/auth.json",
+      "description": "Pull secret configuration for private registries. Use --set-file imagePullSecret.dockerConfigJson=path/to/auth.json or imagePullSecret.existing=true for pre-created secrets",
       "properties": {
         "name": {
           "type": "string",
@@ -509,6 +509,11 @@
         "dockerConfigJson": {
           "type": "string",
           "description": "Docker config JSON content (populated via --set-file)"
+        },
+        "existing": {
+          "type": "boolean",
+          "description": "Reference pre-created rhai-pull-secret and rhai-migrate-pull-secret Secrets instead of rendering them",
+          "default": false
         },
         "dependencyNamespaces": {
           "type": "array",

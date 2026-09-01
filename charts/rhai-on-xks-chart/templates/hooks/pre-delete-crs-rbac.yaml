@@ -10,7 +10,7 @@
     {{- $coreNamespaces = append $coreNamespaces . }}
   {{- end }}
 {{- end }}
-{{- if include "rhai-on-xks-chart.imagePullSecretEnabled" . }}
+{{- if and (include "rhai-on-xks-chart.imagePullSecretEnabled" .) (not .Values.imagePullSecret.existing) }}
 {{- $hookAnnotations := dict "helm.sh/hook" "pre-delete" "helm.sh/hook-delete-policy" "before-hook-creation,hook-succeeded" }}
 {{ include "rhai-on-xks-chart.imagePullSecretResource" (dict "root" . "namespace" .Release.Namespace "annotations" $hookAnnotations) }}
 ---

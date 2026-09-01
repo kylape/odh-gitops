@@ -52,6 +52,16 @@ The `imagePullSecret.dockerConfigJson` parameter:
 
 The secret name defaults to `rhai-pull-secret` and **should not** be changed.
 
+If the required `rhai-pull-secret` and `rhai-migrate-pull-secret` Secrets are
+created by another system, set `imagePullSecret.existing=true`. The chart will
+reference those Secrets in its workloads and hooks without rendering,
+overwriting, or requiring credential data in Helm values:
+
+```yaml
+imagePullSecret:
+  existing: true
+```
+
 > [!NOTE]
 > Pull secrets for dependency namespaces (`cert-manager-operator`, `cert-manager`, `istio-system`, `openshift-lws-operator`) are managed by this chart by default. To customize which dependency namespaces receive pull secrets, set `imagePullSecret.dependencyNamespaces`.
 

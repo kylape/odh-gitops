@@ -32,10 +32,10 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- end }}
 
 {{/*
-Check if imagePullSecret is enabled (dockerConfigJson is provided).
+Check if imagePullSecret is enabled (chart-managed or externally provided).
 */}}
 {{- define "rhai-on-xks-chart.imagePullSecretEnabled" -}}
-{{- if .Values.imagePullSecret.dockerConfigJson -}}
+{{- if or .Values.imagePullSecret.dockerConfigJson .Values.imagePullSecret.existing -}}
 true
 {{- end -}}
 {{- end -}}

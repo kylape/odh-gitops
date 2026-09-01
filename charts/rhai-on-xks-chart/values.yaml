@@ -268,5 +268,9 @@ imagePullSecret:
   name: rhai-pull-secret
   # Docker config JSON content (populated via --set-file)
   dockerConfigJson: ""
+  # Set true when the required secrets are created outside this chart. The
+  # chart references rhai-pull-secret and rhai-migrate-pull-secret without
+  # rendering or modifying them.
+  existing: false
   # Namespaces created by dependency operators where pull secrets should be injected
   dependencyNamespaces: []

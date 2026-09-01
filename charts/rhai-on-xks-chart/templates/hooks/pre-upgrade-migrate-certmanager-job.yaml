@@ -1,5 +1,5 @@
 {{- if .Values.enabled }}
-{{- if (include "rhai-on-xks-chart.imagePullSecretEnabled" .) }}
+{{- if and (include "rhai-on-xks-chart.imagePullSecretEnabled" .) (not .Values.imagePullSecret.existing) }}
 apiVersion: v1
 kind: Secret
 metadata:
