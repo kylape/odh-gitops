@@ -4015,6 +4015,10 @@ spec:
                             name: rhai-ca-bundle
                         containers:
                         - name: istio-proxy
+                          securityContext:
+                            runAsUser: null
+                            runAsGroup: null
+                            runAsNonRoot: true
                           volumeMounts:
                           - name: rhai-ca-bundle
                             mountPath: /var/run/secrets/rhai
@@ -4199,6 +4203,10 @@ spec:
                             name: rhai-ca-bundle
                         containers:
                         - name: istio-proxy
+                          securityContext:
+                            runAsUser: null
+                            runAsGroup: null
+                            runAsNonRoot: true
                           volumeMounts:
                           - name: rhai-ca-bundle
                             mountPath: /var/run/secrets/opendatahub
