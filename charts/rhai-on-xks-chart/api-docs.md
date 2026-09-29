@@ -90,6 +90,7 @@ RHAI on XKS Helm chart for non-OLM installation on non-OpenShift Kubernetes serv
 | gateway.tls.enabled | bool | `true` |  |
 | gateway.tls.issuerRef.kind | string | `"ClusterIssuer"` |  |
 | gateway.tls.issuerRef.name | string | `"rhai-ca-issuer"` |  |
+| gateway.useHostAssignedIDs | bool | `false` | Remove fixed gateway proxy UID/GID so host admission can assign them (e.g. vCluster on OpenShift). |
 | hooks.cliImage | string | `"registry.redhat.io/openshift4/ose-cli-rhel9:v4.20@sha256:d876c1d98b39d65c00c4261431bb84b90284699f3aef84d8701a25c786fb79a1"` |  |
 | hooks.postInstallCrs.enabled | bool | `true` |  |
 | hooks.resources.limits.cpu | string | `"200m"` |  |
