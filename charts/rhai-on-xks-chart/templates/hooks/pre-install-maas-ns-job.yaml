@@ -81,7 +81,9 @@ spec:
           resources:
             {{- toYaml .Values.hooks.resources | nindent 12 }}
           securityContext:
-            runAsUser: 65534
+            {{- with .Values.hooks.runAsUser }}
+            runAsUser: {{ . }}
+            {{- end }}
             allowPrivilegeEscalation: false
             readOnlyRootFilesystem: true
             capabilities:
