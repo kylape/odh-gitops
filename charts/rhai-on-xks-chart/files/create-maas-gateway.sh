@@ -62,6 +62,12 @@ data:
               name: rhai-ca-bundle
           containers:
           - name: istio-proxy
+{{- if .Values.gateway.useHostAssignedIDs }}
+            securityContext:
+              runAsUser: null
+              runAsGroup: null
+              runAsNonRoot: true
+{{- end }}
             volumeMounts:
             - name: rhai-ca-bundle
               mountPath: /var/run/secrets/opendatahub
