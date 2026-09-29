@@ -168,6 +168,11 @@
       "type": "object",
       "description": "Shared inference-gateway TLS identity, used by every component gateway",
       "properties": {
+        "useHostAssignedIDs": {
+          "type": "boolean",
+          "description": "Remove fixed proxy UID/GID from both generated gateway Deployments so host admission can assign them.",
+          "default": false
+        },
         "hostname": {
           "type": "string",
           "description": "External hostname for the shared TLS certificate (e.g. *.mycompany.com). If empty, only cluster-internal DNS is covered.",
