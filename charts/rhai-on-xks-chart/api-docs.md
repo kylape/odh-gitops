@@ -96,6 +96,7 @@ RHAI on XKS Helm chart for non-OLM installation on non-OpenShift Kubernetes serv
 | hooks.resources.limits.memory | string | `"512Mi"` |  |
 | hooks.resources.requests.cpu | string | `"50m"` |  |
 | hooks.resources.requests.memory | string | `"64Mi"` |  |
+| hooks.runAsUser | int | `65534` | UID for all hook containers. Set null to let host admission assign a UID (e.g. vCluster on OpenShift). |
 | imagePullSecret.dependencyNamespaces | list | `[]` |  |
 | imagePullSecret.dockerConfigJson | string | `""` |  |
 | imagePullSecret.name | string | `"rhai-pull-secret"` |  |
