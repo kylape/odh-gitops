@@ -93,6 +93,7 @@ charts:
           - components.aigateway.enabled=true
           - components.aigateway.modelsAsAService.gateway.allowedRoutes.namespaces.from=Same
           - hooks.runAsUser=null
+          - gateway.useHostAssignedIDs=true
 
       - name: with-custom-namespace
         setFlags:
