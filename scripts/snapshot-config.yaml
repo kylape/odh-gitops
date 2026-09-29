@@ -85,6 +85,15 @@ charts:
 
   rhai-on-xks-chart:
     snapshots:
+      - name: coreweave-with-host-assigned-hook-uid
+        setFlags:
+          - coreweave.enabled=true
+          - imagePullSecret.dockerConfigJson=testauth
+          - components.kserve.gateway.allowedRoutes.namespaces.from=Same
+          - components.aigateway.enabled=true
+          - components.aigateway.modelsAsAService.gateway.allowedRoutes.namespaces.from=Same
+          - hooks.runAsUser=null
+
       - name: with-custom-namespace
         setFlags:
           - azure.enabled=true
