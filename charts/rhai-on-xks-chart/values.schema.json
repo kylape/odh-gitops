@@ -139,6 +139,12 @@
           "type": "string",
           "description": "CLI container image used by all post-install hook jobs"
         },
+        "runAsUser": {
+          "type": ["integer", "null"],
+          "minimum": 1,
+          "description": "UID for all hook containers. Set null to let host admission assign a UID, for example in a vCluster on OpenShift.",
+          "default": 65534
+        },
         "resources": {
           "$ref": "#/$defs/resourceRequirements",
           "description": "Default resources for all hook job containers"
