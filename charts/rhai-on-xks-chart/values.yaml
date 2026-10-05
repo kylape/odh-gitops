@@ -20,6 +20,8 @@ rhaiOperator:
   applicationsNamespace: redhat-ods-applications
   # Manager container image
   image: quay.io/opendatahub/opendatahub-operator:latest # image is updated during Helm chart build by konflux
+  # Operator version reported to the RHAI operator. Empty uses the chart appVersion.
+  version: ""
   # Image pull policy
   imagePullPolicy: Always
   # Number of operator replicas
@@ -274,3 +276,5 @@ imagePullSecret:
   existing: false
   # Namespaces created by dependency operators where pull secrets should be injected
   dependencyNamespaces: []
+  # Existing workload namespaces that need a copy of the pull secret; these are not created by the chart
+  additionalNamespaces: []

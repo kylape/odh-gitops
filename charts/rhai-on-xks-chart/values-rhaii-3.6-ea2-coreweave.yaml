@@ -1,0 +1,61 @@
+# RHOAI 3.6 EA2 inference reproducer values for XKS/CoreWeave.
+# Image digests are from the rhods-operator.3.6.0-ea.2 bundle; registry hosts
+# are switched to registry.stage.redhat.io for pre-release access.
+
+coreweave:
+  enabled: true
+  cloudManager:
+    image: registry.stage.redhat.io/rhoai/odh-rhel9-operator@sha256:2ee86ebdac6d71e65742208ed8121330717d5ef9258e0b59974fc836ab2262cb
+
+components:
+  kserve:
+    enabled: true
+    gateway:
+      allowedRoutes:
+        namespaces:
+          from: Selector
+          selector:
+            matchLabels:
+              inference-gateway-access: "true"
+
+rhaiOperator:
+  version: 3.6.0-ea.2
+  image: registry.stage.redhat.io/rhoai/odh-rhel9-operator@sha256:2ee86ebdac6d71e65742208ed8121330717d5ef9258e0b59974fc836ab2262cb
+  relatedImages:
+    - name: RELATED_IMAGE_ODH_KSERVE_AGENT_IMAGE
+      value: registry.stage.redhat.io/rhoai/odh-kserve-agent-rhel9@sha256:de84550cbcd7e4bdd5ea33492996a8aa9c84bd7d93224b3312ebb75ef0c07e44
+    - name: RELATED_IMAGE_ODH_KSERVE_AUTOGLUON_SERVER_IMAGE
+      value: registry.stage.redhat.io/rhoai/odh-kserve-autogluon-server-rhel9@sha256:27968dea8dc6059a963adb60cff8a82a44a94f356d4a6853496318f41779592b
+    - name: RELATED_IMAGE_ODH_KSERVE_CONTROLLER_IMAGE
+      value: registry.stage.redhat.io/rhoai/odh-kserve-controller-rhel9@sha256:c90681bafc90b753b72f71ce873899fd304a44af65f92605e3283de7bae7282c
+    - name: RELATED_IMAGE_ODH_KSERVE_LLMISVC_CONTROLLER_IMAGE
+      value: registry.stage.redhat.io/rhoai/odh-kserve-llmisvc-controller-rhel9@sha256:9e7ffbc0d6b474aa759feb6409de58d841a32e25e5e2e86d7b923bc754d84272
+    - name: RELATED_IMAGE_ODH_KSERVE_LOCALMODEL_CONTROLLER_IMAGE
+      value: registry.stage.redhat.io/rhoai/odh-kserve-localmodel-controller-rhel9@sha256:c62459337c34a180b176be09241ca2e68b1ac9884b2e2fe5e953a3bb384e3e10
+    - name: RELATED_IMAGE_ODH_KSERVE_LOCALMODELNODE_AGENT_IMAGE
+      value: registry.stage.redhat.io/rhoai/odh-kserve-localmodelnode-agent-rhel9@sha256:45fb7665fc66de0514d764d13759c9c11e54758e1fed020a23617085a963052b
+    - name: RELATED_IMAGE_ODH_KSERVE_MODULE_OPERATOR_IMAGE
+      value: registry.stage.redhat.io/rhoai/odh-kserve-module-operator-rhel9@sha256:7caa7a001cc41b2cdb15f529cde6e0a3b3bc8784e959fb935716f9d312485abc
+    - name: RELATED_IMAGE_ODH_KSERVE_ROUTER_IMAGE
+      value: registry.stage.redhat.io/rhoai/odh-kserve-router-rhel9@sha256:94699d7a1cfc873acfb4cef71c792a1371513377106b5f92422cb4cb90dfe1fc
+    - name: RELATED_IMAGE_ODH_KSERVE_STORAGE_INITIALIZER_IMAGE
+      value: registry.stage.redhat.io/rhoai/odh-kserve-storage-initializer-rhel9@sha256:c0a65acf5155ab18252b39a518011aa0bd2fe45691904c1106c87e2a15151df4
+    - name: RELATED_IMAGE_ODH_KUBE_RBAC_PROXY_IMAGE
+      value: registry.stage.redhat.io/rhoai/odh-kube-rbac-proxy-rhel9@sha256:7b4cd3c3990f85d6086a9cf17dc1b407166010ac20354daa8745957587f5ca3e
+    - name: RELATED_IMAGE_ODH_LLM_D_ROUTER_DISAGG_SIDECAR_IMAGE
+      value: registry.stage.redhat.io/rhoai/odh-llm-d-router-disagg-sidecar-rhel9@sha256:85925fed3266f9efe06dbce2ada51043e06ad2844bc6abf2cdc07447f83533c8
+    - name: RELATED_IMAGE_ODH_LLM_D_ROUTER_ENDPOINT_PICKER_IMAGE
+      value: registry.stage.redhat.io/rhoai/odh-llm-d-router-endpoint-picker-rhel9@sha256:bdbd8058f49413e8c22fcb54f0525aa7bc3a1094ae69e06c9d59c28ff47ab6a5
+    - name: RELATED_IMAGE_RHAII_VLLM_CUDA_IMAGE
+      value: registry.stage.redhat.io/rhaii/vllm-cuda-rhel9@sha256:ba060ec145e1b7ac3a3b25b89fc75f7d146746156990ff5858235eaa9d158e32
+    - name: RELATED_IMAGE_RHAII_VLLM_GAUDI_IMAGE
+      value: registry.stage.redhat.io/rhaii/vllm-gaudi-rhel9@sha256:f44bd360c45f3cd025491cfe608514263a1d00f8a6a5b6cc7ef9df31da749efd
+    - name: RELATED_IMAGE_RHAII_VLLM_ROCM_IMAGE
+      value: registry.stage.redhat.io/rhaii/vllm-rocm-rhel9@sha256:3c5d2ead2ec5002060eca315b69fc2970214208e9dfbc8eb4aa3a03ef875f706
+    - name: RELATED_IMAGE_RHAII_VLLM_SPYRE_IMAGE
+      value: registry.stage.redhat.io/rhaii/vllm-spyre-rhel9@sha256:4bfee184fabace5020cfb2d9fa8c581ecf3d69e07583a0f333ea518604d5fc74
+
+imagePullSecret:
+  # Add the existing workspace namespace as a destination; the chart does not create or own it.
+  additionalNamespaces:
+    - prefix-cache-repro

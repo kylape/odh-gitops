@@ -361,6 +361,10 @@
           "type": "string",
           "description": "Manager container image"
         },
+        "version": {
+          "type": "string",
+          "description": "RHAI operator version. Empty uses the chart appVersion."
+        },
         "imagePullPolicy": {
           "type": "string",
           "description": "Image pull policy for the manager container",
@@ -518,6 +522,13 @@
         "dependencyNamespaces": {
           "type": "array",
           "description": "Namespaces created by dependency operators where pull secrets should be injected",
+          "items": {
+            "type": "string"
+          }
+        },
+        "additionalNamespaces": {
+          "type": "array",
+          "description": "Existing workload namespaces that need a copy of the pull secret; these namespaces are not created by the chart",
           "items": {
             "type": "string"
           }

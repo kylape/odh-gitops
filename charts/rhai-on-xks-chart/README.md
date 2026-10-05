@@ -106,6 +106,33 @@ helm upgrade rhaii ./charts/rhai-on-xks-chart/ \
   --set-file imagePullSecret.dockerConfigJson=/path/to/auth.json
 ```
 
+### RHOAI 3.6 EA2 on CoreWeave
+
+The [`values-rhaii-3.6-ea2-coreweave.yaml`](values-rhaii-3.6-ea2-coreweave.yaml) override pins the XKS operator and KServe-related images to the 3.6 EA2 digests from the RHOAI bundle, using the staging registry. It enables the CoreWeave provider and keeps the chart-managed cert-manager dependency enabled for a fresh vCluster. The pull-secret value is intentionally not stored in the file.
+
+Provide a registry auth file that can pull from `registry.stage.redhat.io` and `registry.redhat.io` (used by chart-managed dependencies and the hook CLI image):
+
+```bash
+helm upgrade rhaii ./charts/rhai-on-xks-chart/ \
+  --install --create-namespace \
+  --namespace rhai-gitops \
+  -f ./charts/rhai-on-xks-chart/values-rhaii-3.6-ea2-coreweave.yaml \
+  --set-file imagePullSecret.dockerConfigJson=/path/to/registry-auth.json
+```
+
+Before deploying, label the namespace that will host the inference workspace so its HTTPRoutes can attach to the gateway:
+
+```bash
+kubectl label namespace prefix-cache-repro inference-gateway-access=true
+```
+
+The values file also asks the chart to copy the pull secret into the existing `prefix-cache-repro` namespace. Attach it to the serving service account there so model pods can pull the private image:
+
+```bash
+kubectl patch serviceaccount default -n prefix-cache-repro --type=strategic \
+  --patch '{"imagePullSecrets":[{"name":"rhai-pull-secret"}]}'
+```
+
 > [!WARNING]
 > `helm install --wait` is **not supported**. The chart uses post-install hook Jobs to create Custom Resources after the operators are deployed. These hooks require CRDs to be registered first, and the rhai-operator depends on cert-manager to start correctly. Using `--wait` may cause the installation to time out or fail.
 

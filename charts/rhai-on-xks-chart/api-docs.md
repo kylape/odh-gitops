@@ -97,6 +97,7 @@ RHAI on XKS Helm chart for non-OLM installation on non-OpenShift Kubernetes serv
 | hooks.resources.requests.cpu | string | `"50m"` |  |
 | hooks.resources.requests.memory | string | `"64Mi"` |  |
 | imagePullSecret.dependencyNamespaces | list | `[]` |  |
+| imagePullSecret.additionalNamespaces | list | `[]` | Existing workload namespaces that need a copy of the pull secret; these namespaces are not created by the chart |
 | imagePullSecret.dockerConfigJson | string | `""` |  |
 | imagePullSecret.name | string | `"rhai-pull-secret"` |  |
 | installCRDs | bool | `true` |  |
@@ -115,5 +116,5 @@ RHAI on XKS Helm chart for non-OLM installation on non-OpenShift Kubernetes serv
 | rhaiOperator.resources.limits.memory | string | `"1Gi"` |  |
 | rhaiOperator.resources.requests.cpu | string | `"300m"` |  |
 | rhaiOperator.resources.requests.memory | string | `"256Mi"` |  |
+| rhaiOperator.version | string | `""` | RHAI operator version. Empty uses the chart appVersion. |
 | uninstall.cleanupNamespaces | bool | `false` |  |
-
